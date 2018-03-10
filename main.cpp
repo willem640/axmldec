@@ -125,6 +125,11 @@ void process_file(const std::string& input_filename,
         auto content = extract_manifest(input_filename);
         imemstream ims(content.data(), content.size());
         jitana::read_axml(ims, pt);
+        if (ifs.peek() == 0x03) {
+            jitana::read_axml(ifs, pt);
+        } else {
+            boost_pt::read_xml(ifs, pt, boost_pt::xml_parser::trim_whitespace);
+        }
     }
     else if (ifs.peek() == 0x03) {
         jitana::read_axml(ifs, pt);
